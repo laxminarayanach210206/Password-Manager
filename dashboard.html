@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Password Vault</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script>
+
+function togglePassword(id){
+
+var x=document.getElementById(id);
+
+if(x.type==="password")
+x.type="text";
+else
+x.type="password";
+
+}
+
+function searchSite(){
+
+let input=document.getElementById("search").value.toLowerCase();
+let rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(row=>{
+
+let site=row.cells[0].innerText.toLowerCase();
+
+row.style.display=site.includes(input)?"":"none";
+
+});
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="header">
+
+<h1>🔐 Password Vault</h1>
+
+<a href="/logout" class="logout">Logout</a>
+
+</div>
+
+<!-- Dashboard Statistics -->
+
+<div class="stats">
+
+<h3>Total Stored Passwords: {{count}}</h3>
+
+</div>
+
+<input id="search" class="search" placeholder="Search website..." onkeyup="searchSite()">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Website</th>
+<th>Username</th>
+<th>Password</th>
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for row in data %}
+
+<tr>
+
+<td>{{row[1]}}</td>
+
+<td>{{row[2]}}</td>
+
+<td>
+
+<input type="password" value="{{row[3]}}" id="pw{{row[0]}}" readonly>
+
+</td>
+
+<td>
+
+<button onclick="togglePassword('pw{{row[0]}}')">Show</button>
+
+<a href="/edit/{{row[0]}}">
+<button class="edit">Edit</button>
+</a>
+
+<a href="/delete/{{row[0]}}">
+<button class="delete">Delete</button>
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<div class="form-section">
+
+<h3>Add New Password</h3>
+
+<form action="/add" method="post">
+
+<input name="website" placeholder="Website" required>
+
+<input name="username" placeholder="Username" required>
+
+<input name="password" placeholder="Password" required>
+
+<button type="submit">Save</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+</html>

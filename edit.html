@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Edit Password</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="edit-container">
+
+<h2>Edit Saved Password</h2>
+
+<form action="/edit/{{data[0]}}" method="post">
+
+<div class="form-row">
+
+<label>Website</label>
+<input name="website" value="{{data[1]}}" required>
+
+</div>
+
+<div class="form-row">
+
+<label>Username</label>
+<input name="username" value="{{data[2]}}" required>
+
+</div>
+
+<div class="form-row">
+
+<label>Password</label>
+<input name="password" value="{{data[3]}}" required>
+
+</div>
+
+<button type="submit" class="update-btn">Update Password</button>
+
+<a href="/dashboard" class="cancel-btn">Cancel</a>
+
+</form>
+
+</div>
+
+</body>
+
+</html>
